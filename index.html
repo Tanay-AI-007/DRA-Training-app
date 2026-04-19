@@ -1,25 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>DRA Training App</title>
-  <link rel="stylesheet" href="css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRA Training by IIBF</title>
+    <link rel="stylesheet" href="CSS/main.css">
+    <style>
+        /* Splash specific styles */
+        body {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-content {
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-dark);
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .app-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .app-subtitle {
+            font-size: 14px;
+            color: var(--primary-light);
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 48px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .action-buttons .btn {
+            font-size: 18px;
+            padding: 16px;
+        }
+        
+        .btn-white {
+            background-color: var(--white);
+            color: var(--primary-dark);
+        }
+
+        .lang-selector {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            gap: 16px;
+            color: var(--primary-light);
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        .lang-selector span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .lang-selector span.active {
+            color: var(--white);
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>DRA Training</h1>
-  <button onclick="testConnection()">Test Supabase</button>
+    <!-- Decorative Shapes -->
+    <div class="shape-1"></div>
+    <div class="shape-2"></div>
+    <div class="shape-3"></div>
 
-  <script type="module">
-    import { supabase } from './js/supabase.js'
+    <div class="splash-content">
+        <div class="logo-circle">D</div>
+        <h1 class="app-title">DRA Training</h1>
+        <div class="app-subtitle">by IIBF</div>
+        
+        <p class="tagline">Prepare. Practice. Pass.</p>
 
-    async function testConnection() {
-      const { data, error } = await supabase.from('test').select('*')
-      console.log(data, error)
-      alert("Check console")
-    }
+        <div class="action-buttons">
+            <a href="register.html" class="btn btn-white btn-block">Register</a>
+            <a href="register.html" class="btn btn-outline-white btn-block">Login</a>
+        </div>
+    </div>
 
-    window.testConnection = testConnection
-  </script>
+    <div class="lang-selector">
+        <span class="active">EN</span> | <span>हिंदी</span> | <span>मराठी</span>
+    </div>
 
 </body>
 </html>

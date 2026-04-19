@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | DRA Training</title>
+    <link rel="stylesheet" href="CSS/main.css">
+</head>
+<body>
+
+    <!-- Light App Container with floating shapes -->
+    <div class="shape-bg-light-container">
+        <!-- Reusing shapes with some specific colors for light mode -->
+        <div class="shape-1" style="background-color: var(--primary-light); top: -200px; right: -100px; opacity: 0.3;"></div>
+        <div class="shape-2" style="background-color: var(--primary-medium); top: -50px; left: -150px; opacity: 0.1;"></div>
+    </div>
+
+    <div class="container d-flex flex-column justify-center" style="min-height: 100vh;">
+        
+        <div class="text-center mb-3">
+            <h2 style="color: var(--primary-dark); font-size: 28px;">Create Account</h2>
+            <p>Start your DRA preparation</p>
+        </div>
+
+        <div class="card">
+            <form action="Student/dashboard.html">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Language Preference</label>
+                    <select class="form-control" required style="appearance: none;">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी (Hindi)</option>
+                        <option value="mr">मराठी (Marathi)</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" style="display: flex; justify-content: space-between;">
+                        Monthly Access Code <span>🔒</span>
+                    </label>
+                    <input type="text" class="form-control input-highlight" placeholder="Enter Access Code" required>
+                    <p style="font-size: 12px; margin-top: 6px; color: var(--danger);">* Get this code from your institute</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="#">Login</a></p>
+            <p class="mt-2" style="font-size: 12px;"><a href="Admin/login.html" style="color: var(--text-muted);">Admin Portal</a></p>
+        </div>
+
+    </div>
+
+    <!-- TODO: connect Supabase auth in JS/auth.js -->
+    <script src="JS/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | DRA Training</title>
+    <link rel="stylesheet" href="../CSS/main.css">
+    <link rel="stylesheet" href="../CSS/student.css">
+    <!-- Icon font placeholder -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Shape Background -->
+    <div class="shape-bg-light-container"></div>
+
+    <div class="top-bar">
+        <div>
+            <p style="font-size: 13px; color: var(--primary-light);">Welcome back,</p>
+            <h2>Ramesh Patel</h2>
+        </div>
+        <div class="icons d-flex align-center">
+            <span class="badge" style="background-color: rgba(255,255,255,0.2); color: white;">EN</span>
+            <i class="fa-regular fa-bell"></i>
+            <i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 16px;"></i>
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        
+        <div class="stat-cards-wrapper">
+            <div class="stat-card">
+                <div class="stat-card-title">Tests Taken</div>
+                <div class="stat-card-value">12</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-title">Best Score</div>
+                <div class="stat-card-value">85%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-title">Rank</div>
+                <div class="stat-card-value">#42</div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Available Tests</h3>
+
+        <!-- Test Card 1 -->
+        <div class="card test-card">
+            <div class="test-card-header">
+                <div>
+                    <div class="test-card-title">Module 1: Principles of Banking</div>
+                    <div class="test-meta mt-1">30 Questions • 45 Mins</div>
+                </div>
+                <span class="badge">EN/HI</span>
+            </div>
+            <a href="quiz.html" class="btn btn-outline-white" style="border: 2px solid var(--primary-medium); color: var(--primary-dark); margin-top: 12px; padding: 10px;">
+                Start Test <i class="fa-solid fa-chevron-right" style="margin-left: 8px; font-size: 12px;"></i>
+            </a>
+        </div>
+
+        <!-- Test Card 2 -->
+        <div class="card test-card mb-3">
+            <div class="test-card-header">
+                <div>
+                    <div class="test-card-title">Module 2: Customer Service</div>
+                    <div class="test-meta mt-1">50 Questions • 60 Mins</div>
+                </div>
+                <span class="badge">EN/MR</span>
+            </div>
+            <a href="quiz.html" class="btn btn-outline-white" style="border: 2px solid var(--primary-medium); color: var(--primary-dark); margin-top: 12px; padding: 10px;">
+                Start Test <i class="fa-solid fa-chevron-right" style="margin-left: 8px; font-size: 12px;"></i>
+            </a>
+        </div>
+        
+    </div>
+
+    <!-- Bottom Tab Bar -->
+    <div class="bottom-tab-bar">
+        <div class="tab-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </div>
+        <a href="history.html" class="tab-item" style="text-decoration: none;">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>History</span>
+        </a>
+        <div class="tab-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Profile</span>
+        </div>
+    </div>
+
+    <!-- TODO: connect test fetching logic -->
+    <script src="../JS/supabase.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | DRA Training</title>
+    <link rel="stylesheet" href="../CSS/main.css">
+    <link rel="stylesheet" href="../CSS/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="quiz-header">
+        <a href="dashboard.html" style="color: var(--text-primary);"><i class="fa-solid fa-xmark" style="font-size: 24px;"></i></a>
+        <div style="font-weight: 700;">Module 1 Quiz</div>
+        <div style="color: var(--primary-dark); font-weight: 600;"><i class="fa-regular fa-clock"></i> 44:59</div>
+    </div>
+
+    <div class="container" style="padding-top: 0; padding-bottom: 100px;">
+        <div class="d-flex justify-between align-center mb-1">
+            <span style="font-size: 14px; color: var(--text-muted); font-weight: 600;">Question 4 of 30</span>
+        </div>
+        <div class="progress-container mb-3">
+            <div class="progress-bar" style="width: 13%;"></div>
+        </div>
+
+        <div class="card mb-3" style="min-height: 150px;">
+            <div class="question-text">
+                Which of the following is NOT a primary function of a commercial bank in India?
+            </div>
+        </div>
+
+        <div class="options-container">
+            <button class="option-btn selected">
+                <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">A</span>
+                Accepting Deposits
+            </button>
+            <button class="option-btn">
+                <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">B</span>
+                Granting Loans and Advances
+            </button>
+            <button class="option-btn correct">
+                <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">C</span>
+                Issuing Currency Notes
+            </button>
+            <button class="option-btn wrong">
+                <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">D</span>
+                Overdraft Facility
+            </button>
+        </div>
+    </div>
+
+    <div class="quiz-footer">
+        <a href="result.html" class="btn btn-primary btn-block">Next Question</a>
+    </div>
+
+    <!-- TODO: Add quiz interaction logic -->
+    <script src="../JS/quiz.js"></script>
+</body>
+</html>

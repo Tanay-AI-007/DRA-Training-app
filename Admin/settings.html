@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | DRA Training</title>
+    <link rel="stylesheet" href="../CSS/main.css">
+    <link rel="stylesheet" href="../CSS/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <h2>DRA Training</h2>
+                <p style="font-size: 12px; color: var(--primary-light); opacity: 0.8;">Admin Portal</p>
+            </div>
+            <nav class="admin-nav">
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-users"></i> Students</a>
+                <a href="upload.html" class="nav-link"><i class="fa-solid fa-cloud-arrow-up"></i> Question Bank</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-file-invoice"></i> Reports</a>
+                <a href="settings.html" class="nav-link active"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-content">
+            <div class="admin-header">
+                <h1>Settings</h1>
+            </div>
+
+            <div class="card" style="max-width: 600px;">
+                <h3 class="mb-2">Monthly Access Code</h3>
+                <p>Distribute this code to students to allow registration and login.</p>
+                
+                <div class="access-code-card">
+                    <span class="code-blurred" id="accessCodeDisplay">IIBF-DRA-2023-OCT</span>
+                    <i class="fa-solid fa-eye" style="cursor: pointer; color: var(--primary-medium);" onclick="document.getElementById('accessCodeDisplay').classList.toggle('code-blurred')"></i>
+                </div>
+
+                <p style="font-size: 13px; color: var(--danger); margin-bottom: 24px;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Warning: Changing code will lock all inactive students out on their next login.
+                </p>
+
+                <button class="btn btn-outline-white" style="border: 2px solid var(--primary-medium); color: var(--primary-dark);" onclick="document.getElementById('codeModal').classList.add('active')">
+                    Change Access Code
+                </button>
+
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+                <h3 class="mb-2">Data Retention</h3>
+                <label style="display: flex; align-items: center; gap: 12px; font-weight: 500; cursor: pointer;">
+                    <input type="checkbox" style="width: 18px; height: 18px;" checked>
+                    Delete inactive accounts after 7 days
+                </label>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Base -->
+    <div class="modal-overlay" id="codeModal">
+        <div class="card modal-content">
+            <h3 class="mb-2">Change Access Code</h3>
+            <div class="form-group">
+                <label class="form-label">New Code</label>
+                <input type="text" class="form-control" placeholder="Enter new monthly code">
+            </div>
+            <div class="d-flex gap-2 mt-3" style="gap: 12px;">
+                <button class="btn btn-outline-white flex-1" style="border: 2px solid #cbd5e1; color: var(--text-primary); flex: 1;" onclick="document.getElementById('codeModal').classList.remove('active')">Cancel</button>
+                <button class="btn btn-primary flex-1" style="flex: 1;" onclick="document.getElementById('codeModal').classList.remove('active')">Save Code</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../JS/admin.js"></script>
+</body>
+</html>
