@@ -1,91 +1,76 @@
-import { supabase } from './supabase.js'
+import { auth, db } from './firebase.js'
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  doc, setDoc, updateDoc, collection,
+  query, orderBy, limit, getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// ── REGISTER ──────────────────────────────────────────────────────
+async function getLatestAccessCode() {
+  const q = query(
+    collection(db, 'access_codes'),
+    orderBy('created_at', 'desc'),
+    limit(1)
+  )
+  const snapshot = await getDocs(q)
+  if (snapshot.empty) return null
+  return snapshot.docs[0].data().code
+}
+
 export async function registerStudent(fullName, email, password, language, accessCode) {
-  // 1. Verify access code
-  const { data: codes, error: codeError } = await supabase
-    .from('access_codes')
-    .select('code')
-    .order('created_at', { ascending: false })
-    .limit(1)
+  const latestCode = await getLatestAccessCode()
+  if (!latestCode) return { error: 'No access code found. Contact your institute.' }
+  if (latestCode !== accessCode) return { error: 'Invalid access code. Contact your institute.' }
 
-  if (codeError || !codes || codes.length === 0) {
-    return { error: 'Could not verify access code. Please try again.' }
-  }
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    .catch(err => ({ error: err.message }))
+  if (userCredential.error) return userCredential
 
-  if (codes[0].code !== accessCode) {
-    return { error: 'Invalid access code. Contact your institute.' }
-  }
-
-  // 2. Create auth account
-  const { data: authData, error: authError } = await supabase.auth.signUp({ email, password })
-
-  if (authError) return { error: authError.message }
-
-  // 3. Save student profile
-  const { error: profileError } = await supabase
-    .from('students')
-    .insert({
-      id: authData.user.id,
-      full_name: fullName,
-      language: language,
-      last_verified_code: accessCode,
-      is_active: true
-    })
-
-  if (profileError) return { error: profileError.message }
+  await setDoc(doc(db, 'students', userCredential.user.uid), {
+    full_name: fullName,
+    email: email,
+    language: language,
+    last_verified_code: accessCode,
+    is_active: true,
+    created_at: new Date()
+  })
 
   return { success: true }
 }
 
-// ── LOGIN ─────────────────────────────────────────────────────────
 export async function loginStudent(email, password, accessCode) {
-  // 1. Verify access code
-  const { data: codes, error: codeError } = await supabase
-    .from('access_codes')
-    .select('code')
-    .order('created_at', { ascending: false })
-    .limit(1)
+  const latestCode = await getLatestAccessCode()
+  if (!latestCode) return { error: 'No access code found. Contact your institute.' }
+  if (latestCode !== accessCode) return { error: 'Wrong access code. Get the new one from your institute.' }
 
-  if (codeError || !codes || codes.length === 0) {
-    return { error: 'Could not verify access code. Please try again.' }
-  }
+  const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    .catch(err => ({ error: err.message }))
+  if (userCredential.error) return userCredential
 
-  if (codes[0].code !== accessCode) {
-    return { error: 'Wrong access code. Get the new one from your institute.' }
-  }
-
-  // 2. Sign in
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-
-  if (error) return { error: error.message }
-
-  // 3. Update verified code
-  await supabase
-    .from('students')
-    .update({ last_verified_code: accessCode })
-    .eq('id', data.user.id)
+  await updateDoc(doc(db, 'students', userCredential.user.uid), {
+    last_verified_code: accessCode
+  })
 
   return { success: true }
 }
 
-// ── LOGOUT ────────────────────────────────────────────────────────
 export async function logout() {
-  await supabase.auth.signOut()
+  await signOut(auth)
   window.location.href = '/index.html'
 }
 
-// ── GET SESSION ───────────────────────────────────────────────────
 export async function getSession() {
-  const { data } = await supabase.auth.getSession()
-  return data.session
+  return new Promise(resolve => {
+    onAuthStateChanged(auth, user => resolve(user))
+  })
 }
 
-// ── GUARD: redirect to login if not logged in ─────────────────────
 export async function requireAuth() {
-  const session = await getSession()
-  if (!session) {
-    window.location.href = '/login.html'
-  }
-  return session
+  const user = await getSession()
+  if (!user) window.location.href = '/login.html'
+  return user
 }
