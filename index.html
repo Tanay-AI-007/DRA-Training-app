@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DRA Training App</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <h1>DRA Training</h1>
+  <button onclick="testConnection()">Test Supabase</button>
+
+  <script type="module">
+    import { supabase } from './js/supabase.js'
+
+    async function testConnection() {
+      const { data, error } = await supabase.from('test').select('*')
+      console.log(data, error)
+      alert("Check console")
+    }
+
+    window.testConnection = testConnection
+  </script>
+
+</body>
+</html>
