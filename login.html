@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | DRA Training</title>
+    <title>Login | DRA Training</title>
     <link rel="stylesheet" href="CSS/main.css">
 </head>
 <body>
@@ -16,16 +16,11 @@
     <div class="container d-flex flex-column justify-center" style="min-height: 100vh;">
 
         <div class="text-center mb-3">
-            <h2 style="color: var(--primary-dark); font-size: 28px;">Create Account</h2>
-            <p>Start your DRA preparation</p>
+            <h2 style="color: var(--primary-dark); font-size: 28px;">Welcome Back</h2>
+            <p>Login to your DRA Training account</p>
         </div>
 
         <div class="card">
-
-            <div class="form-group">
-                <label class="form-label">Full Name</label>
-                <input type="text" id="fullname" class="form-control" placeholder="John Doe" required>
-            </div>
 
             <div class="form-group">
                 <label class="form-label">Email</label>
@@ -37,15 +32,6 @@
                 <input type="password" id="password" class="form-control" placeholder="••••••••" required>
             </div>
 
-            <div class="form-group">
-                <label class="form-label">Language Preference</label>
-                <select id="language" class="form-control" required style="appearance: none;">
-                    <option value="en">English</option>
-                    <option value="hi">हिंदी</option>
-                    <option value="mr">मराठी</option>
-                </select>
-            </div>
-
             <div class="form-group mb-3">
                 <label class="form-label" style="display: flex; justify-content: space-between;">
                     Monthly Access Code <span>🔒</span>
@@ -53,60 +39,47 @@
                 <input type="text" id="access-code" class="form-control input-highlight" placeholder="Enter Access Code" required>
                 <p style="font-size: 12px; margin-top: 6px; color: var(--danger);">* Get this code from your institute</p>
                 <div id="error-msg" style="color: var(--danger); font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
-                <div id="success-msg" style="color: var(--success); font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
             </div>
 
-            <button id="register-btn" class="btn btn-primary btn-block">Register</button>
+            <button id="login-btn" class="btn btn-primary btn-block">Login</button>
 
         </div>
 
         <div class="text-center mt-3">
-            <p>Already have an account? <a href="/login.html">Login</a></p>
+            <p>Don't have an account? <a href="/register.html">Register</a></p>
             <p class="mt-2" style="font-size: 12px;"><a href="Admin/login.html" style="color: var(--text-muted);">Admin Portal</a></p>
         </div>
 
     </div>
 
     <script type="module">
-        import { registerStudent } from './JS/auth.js'
+        import { loginStudent } from './JS/auth.js'
 
-        document.getElementById('register-btn').addEventListener('click', async () => {
-            const fullName   = document.getElementById('fullname').value.trim()
+        document.getElementById('login-btn').addEventListener('click', async () => {
             const email      = document.getElementById('email').value.trim()
             const password   = document.getElementById('password').value
-            const language   = document.getElementById('language').value
             const accessCode = document.getElementById('access-code').value.trim()
             const errorDiv   = document.getElementById('error-msg')
-            const successDiv = document.getElementById('success-msg')
-            const btn        = document.getElementById('register-btn')
+            const btn        = document.getElementById('login-btn')
 
             errorDiv.textContent = ''
-            successDiv.textContent = ''
 
-            if (!fullName || !email || !password || !accessCode) {
+            if (!email || !password || !accessCode) {
                 errorDiv.textContent = 'Please fill all fields.'
                 return
             }
 
-            if (password.length < 6) {
-                errorDiv.textContent = 'Password must be at least 6 characters.'
-                return
-            }
-
-            btn.textContent = 'Registering...'
+            btn.textContent = 'Logging in...'
             btn.disabled = true
 
-            const result = await registerStudent(fullName, email, password, language, accessCode)
+            const result = await loginStudent(email, password, accessCode)
 
             if (result.error) {
                 errorDiv.textContent = result.error
-                btn.textContent = 'Register'
+                btn.textContent = 'Login'
                 btn.disabled = false
             } else {
-                successDiv.textContent = 'Account created! Redirecting...'
-                setTimeout(() => {
-                    window.location.href = '/Student/dashboard.html'
-                }, 1500)
+                window.location.href = '/Student/dashboard.html'
             }
         })
     </script>
