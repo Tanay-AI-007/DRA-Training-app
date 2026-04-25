@@ -6,6 +6,7 @@
     <title>Quiz | DRA Training</title>
     <link rel="stylesheet" href="../CSS/main.css">
     <link rel="stylesheet" href="../CSS/student.css">
+    <link rel="stylesheet" href="../CSS/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -24,29 +25,31 @@
             <div class="progress-bar" style="width: 13%;"></div>
         </div>
 
-        <div class="card mb-3" style="min-height: 150px;">
-            <div class="question-text">
-                Which of the following is NOT a primary function of a commercial bank in India?
+        <div class="question-slide slide-in-right">
+            <div class="card mb-3" style="min-height: 150px;">
+                <div class="question-text">
+                    Which of the following is NOT a primary function of a commercial bank in India?
+                </div>
             </div>
-        </div>
 
-        <div class="options-container">
-            <button class="option-btn selected">
-                <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">A</span>
-                Accepting Deposits
-            </button>
-            <button class="option-btn">
-                <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">B</span>
-                Granting Loans and Advances
-            </button>
-            <button class="option-btn correct">
-                <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">C</span>
-                Issuing Currency Notes
-            </button>
-            <button class="option-btn wrong">
-                <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">D</span>
-                Overdraft Facility
-            </button>
+            <div class="options-container">
+                <button class="option-btn selected spotlight-btn">
+                    <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">A</span>
+                    Accepting Deposits
+                </button>
+                <button class="option-btn spotlight-btn">
+                    <span class="mr-3" style="font-weight: 800; color: var(--primary-light);">B</span>
+                    Granting Loans and Advances
+                </button>
+                <button class="option-btn correct spotlight-btn">
+                    <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">C</span>
+                    Issuing Currency Notes
+                </button>
+                <button class="option-btn wrong spotlight-btn">
+                    <span class="mr-3" style="font-weight: 800; color: rgba(255,255,255,0.7);">D</span>
+                    Overdraft Facility
+                </button>
+            </div>
         </div>
     </div>
 
@@ -56,15 +59,11 @@
 
     <!-- TODO: Add quiz interaction logic -->
     <script src="../JS/quiz.js"></script>
-    <script>
-        window.addEventListener('offline', () => {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding:40px;">
-                    <h2>No Internet Connection</h2>
-                    <p>Please check your network and try again.</p>
-                </div>
-            `
-        })
+    <script type="module">
+        import { initSpotlight, setupOfflineDetection } from '../JS/animations.js';
+        
+        setupOfflineDetection();
+        initSpotlight();
     </script>
 
 </body>

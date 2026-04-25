@@ -1,207 +1,179 @@
-/* ============================================
-   DRA Training — Shared Animation Utilities
-   Pure vanilla JS, no libraries.
-   ============================================ */
-
-/* ── Offline / Online Overlay ── */
-export function initOfflineOverlay() {
-  // Create overlay element
-  const overlay = document.createElement('div')
-  overlay.className = 'offline-overlay'
-  overlay.innerHTML = `
-    <div class="offline-icon">📡</div>
-    <h2>No Internet Connection</h2>
-    <p>Please check your network and try again.</p>
-  `
-  document.body.appendChild(overlay)
-
-  window.addEventListener('offline', () => overlay.classList.add('visible'))
-  window.addEventListener('online', () => overlay.classList.remove('visible'))
-  // If already offline on load
-  if (!navigator.onLine) overlay.classList.add('visible')
+// --- Typewriter Animation ---
+export function initTypewriter(element, text, speed = 60, delay = 0) {
+    if (!element) return;
+    element.innerHTML = '';
+    let i = 0;
+    
+    setTimeout(() => {
+        function typeWriter() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        typeWriter();
+    }, delay);
 }
 
-/* ── Line Waves SVG Background ── */
-export function injectLineWaves(light = false) {
-  const container = document.createElement('div')
-  container.className = 'line-waves-bg' + (light ? ' line-waves-bg-light' : '')
-  container.innerHTML = `
-    <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-      <g class="wave-group-1">
-        <path d="M0,400 C150,350 350,500 600,400 C850,300 1050,450 1200,400"/>
-        <path d="M0,450 C200,400 400,550 600,450 C800,350 1000,500 1200,450"/>
-        <path d="M0,500 C180,460 380,580 600,500 C820,420 1020,540 1200,500"/>
-      </g>
-      <g class="wave-group-2">
-        <path d="M0,300 C120,260 320,380 600,300 C880,220 1080,340 1200,300"/>
-        <path d="M0,350 C200,310 400,430 600,350 C800,270 1000,390 1200,350"/>
-      </g>
-      <g class="wave-group-3">
-        <path d="M0,550 C160,510 360,630 600,550 C840,470 1040,590 1200,550"/>
-        <path d="M0,600 C140,570 340,670 600,600 C860,530 1060,630 1200,600"/>
-        <path d="M0,650 C180,620 380,720 600,650 C820,580 1020,680 1200,650"/>
-      </g>
-    </svg>
-  `
-  document.body.prepend(container)
+// --- Counting Number Animation ---
+export function initCountingNumbers(duration = 1500) {
+    const elements = document.querySelectorAll('.counting-number');
+    
+    elements.forEach(el => {
+        const targetValueStr = el.innerText.trim();
+        const isPercentage = targetValueStr.includes('%');
+        const isHash = targetValueStr.includes('#');
+        const target = parseFloat(targetValueStr.replace(/[^0-9.]/g, ''));
+        
+        if (isNaN(target)) return;
+        
+        let startTimestamp = null;
+        
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            // easeOutQuart
+            const easeProgress = 1 - Math.pow(1 - progress, 4);
+            
+            const current = Math.floor(easeProgress * target);
+            
+            let displayValue = current.toString();
+            if (isPercentage) displayValue += '%';
+            if (isHash) displayValue = '#' + displayValue;
+            
+            el.innerText = displayValue;
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                el.innerText = targetValueStr; // ensure exact final value
+            }
+        };
+        
+        window.requestAnimationFrame(step);
+    });
 }
 
-/* ── Split Text Animation ── */
-export function splitTextAnimate(selector, staggerMs = 50) {
-  const el = document.querySelector(selector)
-  if (!el) return 0
-  const text = el.textContent
-  el.textContent = ''
-  el.style.visibility = 'visible'
-  const letters = text.split('')
-  letters.forEach((char, i) => {
-    const span = document.createElement('span')
-    span.className = 'split-letter'
-    span.textContent = char === ' ' ? '\u00A0' : char
-    span.style.animationDelay = `${i * staggerMs}ms`
-    el.appendChild(span)
-  })
-  return letters.length * staggerMs + 500 // total duration
+// --- Tilt Card Animation ---
+export function initTiltCard() {
+    const cards = document.querySelectorAll('.tilt-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Calculate tilt (max 8 degrees)
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const tiltX = ((y - centerY) / centerY) * -8;
+            const tiltY = ((x - centerX) / centerX) * 8;
+            
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            
+            // Update custom properties for shine effect
+            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+    });
 }
 
-/* ── Typewriter Effect ── */
-export function typewriter(selector, text, speed = 60, startDelay = 0) {
-  const el = document.querySelector(selector)
-  if (!el) return
-  el.textContent = ''
-  el.style.visibility = 'visible'
-  const cursor = document.createElement('span')
-  cursor.className = 'typewriter-cursor'
-  el.appendChild(cursor)
-  let i = 0
-  setTimeout(() => {
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        el.insertBefore(document.createTextNode(text[i]), cursor)
-        i++
-      } else {
-        clearInterval(interval)
-        // Remove cursor after 2s
-        setTimeout(() => cursor.remove(), 2000)
-      }
-    }, speed)
-  }, startDelay)
+// --- Spotlight Animation ---
+export function initSpotlight() {
+    const containers = document.querySelectorAll('.spotlight-btn');
+    
+    containers.forEach(container => {
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            container.style.setProperty('--mouse-x', `${x}px`);
+            container.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 }
 
-/* ── Count Up Number Animation ── */
-export function countUp(el, target, duration = 1500, prefix = '', suffix = '') {
-  const start = performance.now()
-  const numTarget = parseFloat(target)
-  if (isNaN(numTarget)) return
-
-  function update(now) {
-    const elapsed = now - start
-    const progress = Math.min(elapsed / duration, 1)
-    // easeOutExpo
-    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
-    const current = Math.round(numTarget * ease)
-    el.textContent = prefix + current.toLocaleString() + suffix
-    if (progress < 1) requestAnimationFrame(update)
-  }
-  requestAnimationFrame(update)
+// --- Glare Card Animation ---
+export function initGlare() {
+    const cards = document.querySelectorAll('.glare-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // For glare translation relative to mouse position
+            const moveX = (x / rect.width) * 200 - 100; // -100 to 100%
+            const moveY = (y / rect.height) * 200 - 100;
+            
+            card.style.setProperty('--mouse-x', `${moveX}%`);
+            card.style.setProperty('--mouse-y', `${moveY}%`);
+        });
+    });
 }
 
-/* ── Tilt Card Effect ── */
-export function initTiltCards(selector) {
-  document.querySelectorAll(selector).forEach(card => {
-    card.classList.add('tilt-card')
-    // Add shine overlay
-    const shine = document.createElement('div')
-    shine.className = 'tilt-shine'
-    card.appendChild(shine)
-
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      const centerX = rect.width / 2
-      const centerY = rect.height / 2
-      const rotateX = ((y - centerY) / centerY) * -8
-      const rotateY = ((x - centerX) / centerX) * 8
-      card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
-      shine.style.opacity = '1'
-      shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15), transparent 60%)`
-    })
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(600px) rotateX(0) rotateY(0)'
-      shine.style.opacity = '0'
-    })
-  })
+// --- Confetti Animation ---
+export function triggerConfetti() {
+    const container = document.createElement('div');
+    container.classList.add('confetti-container');
+    document.body.appendChild(container);
+    
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Randomize position and animation properties
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        
+        container.appendChild(confetti);
+    }
+    
+    // Remove container after animations complete
+    setTimeout(() => {
+        container.remove();
+    }, 6000);
 }
 
-/* ── Spotlight Effect for Buttons ── */
-export function initSpotlightButtons(selector) {
-  document.querySelectorAll(selector).forEach(btn => {
-    btn.classList.add('spotlight-btn')
-    const glow = document.createElement('div')
-    glow.className = 'spotlight-glow'
-    btn.appendChild(glow)
+// --- Offline Detection ---
+export function setupOfflineDetection() {
+    // Create overlay element
+    const overlay = document.createElement('div');
+    overlay.className = 'offline-overlay';
+    overlay.innerHTML = `
+        <i class="fa-solid fa-wifi fa-slash offline-icon" style="font-size: 64px; color: white;"></i>
+        <h2>No Internet Connection</h2>
+        <p>Please check your network and try again.</p>
+    `;
+    
+    // Ensure we don't duplicate
+    if (!document.querySelector('.offline-overlay')) {
+        document.body.appendChild(overlay);
+    }
 
-    btn.addEventListener('mousemove', e => {
-      const rect = btn.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.1), transparent 60%)`
-    })
-  })
-}
+    const updateStatus = () => {
+        const el = document.querySelector('.offline-overlay');
+        if (el) {
+            if (!navigator.onLine) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        }
+    };
 
-/* ── Glare Card ── */
-export function initGlareCard(selector) {
-  const card = document.querySelector(selector)
-  if (!card) return
-  card.classList.add('glare-card')
-  const overlay = document.createElement('div')
-  overlay.className = 'glare-overlay'
-  card.appendChild(overlay)
-
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    overlay.style.opacity = '1'
-    overlay.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2), transparent 50%)`
-  })
-
-  card.addEventListener('mouseleave', () => {
-    overlay.style.opacity = '0'
-  })
-}
-
-/* ── Confetti ── */
-export function launchConfetti(duration = 3000) {
-  const container = document.createElement('div')
-  container.className = 'confetti-container'
-  document.body.appendChild(container)
-
-  const colors = ['#1a56db', '#3b82f6', '#93c5fd', '#ffffff', '#dbeafe']
-  const count = 60
-
-  for (let i = 0; i < count; i++) {
-    const piece = document.createElement('div')
-    piece.className = 'confetti-piece'
-    piece.style.left = Math.random() * 100 + '%'
-    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
-    piece.style.width = (Math.random() * 8 + 6) + 'px'
-    piece.style.height = (Math.random() * 8 + 6) + 'px'
-    piece.style.animationDuration = (Math.random() * 2 + 2) + 's'
-    piece.style.animationDelay = (Math.random() * 1.5) + 's'
-    container.appendChild(piece)
-  }
-
-  setTimeout(() => container.remove(), duration + 2000)
-}
-
-/* ── Stagger Fade-In Utility ── */
-export function staggerFadeIn(selector, staggerMs = 100) {
-  document.querySelectorAll(selector).forEach((el, i) => {
-    el.classList.add('anim-stagger')
-    el.style.animationDelay = `${i * staggerMs}ms`
-  })
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    
+    // Initial check
+    updateStatus();
 }

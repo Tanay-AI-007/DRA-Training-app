@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | DRA Training</title>
     <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="CSS/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <div class="shape-bg-light-container">
         <div class="shape-1" style="background-color: var(--primary-light); top: -200px; right: -100px; opacity: 0.3;"></div>
         <div class="shape-2" style="background-color: var(--primary-medium); top: -50px; left: -150px; opacity: 0.1;"></div>
+    </div>
+
+    <div class="line-waves-bg">
+        <div class="line-wave"></div>
+        <div class="line-wave"></div>
+        <div class="line-wave"></div>
+        <div class="line-wave"></div>
+        <div class="line-wave"></div>
     </div>
 
     <div class="container d-flex flex-column justify-center" style="min-height: 100vh;">
@@ -20,7 +30,7 @@
             <p>Start your DRA preparation</p>
         </div>
 
-        <div class="card">
+        <div class="card slide-up-fade">
 
             <div class="form-group">
                 <label class="form-label">Full Name</label>
@@ -53,13 +63,15 @@
                 <label class="form-label" style="display: flex; justify-content: space-between;">
                     Monthly Access Code <span>🔒</span>
                 </label>
-                <input type="text" id="access-code" class="form-control input-highlight" placeholder="Enter Access Code" required>
+                <div class="border-beam-container" style="border-radius: 8px;">
+                    <input type="text" id="access-code" class="form-control input-highlight" placeholder="Enter Access Code" required style="background: transparent; position: relative; z-index: 2; border: none;">
+                </div>
                 <p style="font-size: 12px; margin-top: 6px; color: var(--danger);">* Get this code from your institute</p>
                 <div id="error-msg" style="color: var(--danger); font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
                 <div id="success-msg" style="color: var(--success); font-size: 13px; margin-top: 6px; font-weight: 600;"></div>
             </div>
 
-            <button id="register-btn" class="btn btn-primary btn-block">Register</button>
+            <button id="register-btn" class="btn btn-primary btn-block shimmer-btn">Register</button>
 
         </div>
 
@@ -126,15 +138,8 @@
         })
     </script>
 
-    <script>
-        window.addEventListener('offline', () => {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding:40px;">
-                    <h2>No Internet Connection</h2>
-                    <p>Please check your network and try again.</p>
-                </div>
-            `
-        })
+        import { setupOfflineDetection } from './JS/animations.js'
+        setupOfflineDetection();
     </script>
 
 </body>

@@ -6,6 +6,7 @@
     <title>Dashboard | DRA Training</title>
     <link rel="stylesheet" href="../CSS/main.css">
     <link rel="stylesheet" href="../CSS/student.css">
+    <link rel="stylesheet" href="../CSS/animations.css">
     <!-- Icon font placeholder -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -31,22 +32,22 @@
         <div class="stat-cards-wrapper">
             <div class="stat-card">
                 <div class="stat-card-title">Tests Taken</div>
-                <div class="stat-card-value">12</div>
+                <div class="stat-card-value counting-number">12</div>
             </div>
             <div class="stat-card">
                 <div class="stat-card-title">Best Score</div>
-                <div class="stat-card-value">85%</div>
+                <div class="stat-card-value counting-number">85%</div>
             </div>
             <div class="stat-card">
                 <div class="stat-card-title">Rank</div>
-                <div class="stat-card-value">#42</div>
+                <div class="stat-card-value counting-number">#42</div>
             </div>
         </div>
 
         <h3 class="section-title">Available Tests</h3>
 
         <!-- Test Card 1 -->
-        <div class="card test-card">
+        <div class="card test-card tilt-card slide-up-fade" style="animation-delay: 0.1s; opacity: 0;">
             <div class="test-card-header">
                 <div>
                     <div class="test-card-title">Module 1: Principles of Banking</div>
@@ -60,7 +61,7 @@
         </div>
 
         <!-- Test Card 2 -->
-        <div class="card test-card mb-3">
+        <div class="card test-card mb-3 tilt-card slide-up-fade" style="animation-delay: 0.2s; opacity: 0;">
             <div class="test-card-header">
                 <div>
                     <div class="test-card-title">Module 2: Customer Service</div>
@@ -106,15 +107,12 @@
             }
         }
     </script>
-    <script>
-        window.addEventListener('offline', () => {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding:40px;">
-                    <h2>No Internet Connection</h2>
-                    <p>Please check your network and try again.</p>
-                </div>
-            `
-        })
+    <script type="module">
+        import { initCountingNumbers, initTiltCard, setupOfflineDetection } from '../JS/animations.js';
+        
+        setupOfflineDetection();
+        initCountingNumbers(1500);
+        initTiltCard();
     </script>
 
 </body>

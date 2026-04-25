@@ -6,6 +6,7 @@
     <title>Result | DRA Training</title>
     <link rel="stylesheet" href="../CSS/main.css">
     <link rel="stylesheet" href="../CSS/student.css">
+    <link rel="stylesheet" href="../CSS/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -16,9 +17,9 @@
             <p>Module 1: Principles of Banking</p>
         </div>
 
-        <div class="result-circle-container">
+        <div class="result-circle-container glare-card" style="border-radius: 50%;">
             <div class="result-circle">
-                <div class="result-score">24</div>
+                <div class="result-score counting-number">24</div>
                 <div class="result-total">out of 30</div>
             </div>
         </div>
@@ -52,15 +53,18 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('offline', () => {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding:40px;">
-                    <h2>No Internet Connection</h2>
-                    <p>Please check your network and try again.</p>
-                </div>
-            `
-        })
+    <script type="module">
+        import { initGlare, initCountingNumbers, setupOfflineDetection, triggerConfetti } from '../JS/animations.js';
+        
+        setupOfflineDetection();
+        initGlare();
+        initCountingNumbers(1500);
+
+        // Score check for confetti
+        const score = parseInt(document.querySelector('.result-score').innerText);
+        if (score >= 21) {
+            triggerConfetti();
+        }
     </script>
 
 </body>
