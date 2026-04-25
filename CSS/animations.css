@@ -1,0 +1,302 @@
+/* ============================================
+   DRA Training — Premium Animations
+   Pure CSS animations, no libraries.
+   Does NOT change any existing colors.
+   ============================================ */
+
+/* ── Offline Overlay ── */
+.offline-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 86, 219, 0.97);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.offline-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.offline-overlay h2 {
+  color: #fff;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.offline-overlay p {
+  color: rgba(255,255,255,0.8);
+  font-size: 14px;
+}
+.offline-overlay .offline-icon {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+  70%  { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+/* ── Line Waves Background ── */
+.line-waves-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.line-waves-bg svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  opacity: 0.15;
+}
+.line-waves-bg svg path {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
+.wave-group-1 { animation: wave-drift 12s linear infinite; }
+.wave-group-2 { animation: wave-drift 16s linear infinite reverse; }
+.wave-group-3 { animation: wave-drift 20s linear infinite; }
+
+@keyframes wave-drift {
+  0%   { transform: translateX(0) translateY(0); }
+  50%  { transform: translateX(-5%) translateY(-18px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* ── Split Text Letter Animation ── */
+.split-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: letter-rise 0.5s ease forwards;
+}
+
+@keyframes letter-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Typewriter Cursor ── */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: currentColor;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink-cursor 0.7s step-end infinite;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── Shimmer Button ── */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.35) 50%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0%   { left: -100%; }
+  100% { left: 150%; }
+}
+
+/* ── Card Fade-In Slide Up ── */
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fade-slide-up 0.5s ease-out forwards;
+}
+
+@keyframes fade-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Border Beam (Rotating Glow) ── */
+.border-beam {
+  position: relative;
+}
+.border-beam::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0%,
+    var(--primary-dark, #1a56db) 10%,
+    transparent 20%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beam-rotate 2.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes beam-rotate {
+  to { --beam-angle: 360deg; }
+}
+/* Register the custom property for animation */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── Stagger Fade In (for lists of cards) ── */
+.anim-stagger {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fade-slide-up 0.45s ease-out forwards;
+}
+
+/* ── Tilt Card ── */
+.tilt-card {
+  transition: transform 0.15s ease-out;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+.tilt-card .tilt-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: inherit;
+}
+
+/* ── Spotlight Effect on Option Buttons ── */
+.spotlight-btn {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-btn .spotlight-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: inherit;
+}
+.spotlight-btn:hover .spotlight-glow {
+  opacity: 1;
+}
+
+/* ── Question Slide Transition ── */
+.question-slide-enter {
+  animation: slide-in-right 0.3s ease forwards;
+}
+.question-slide-exit {
+  animation: slide-out-left 0.3s ease forwards;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes slide-out-left {
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-100%); opacity: 0; }
+}
+
+/* ── Glare Card ── */
+.glare-card {
+  position: relative;
+  overflow: hidden;
+}
+.glare-card .glare-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: inherit;
+}
+.glare-card:hover .glare-overlay {
+  opacity: 1;
+}
+
+/* ── Confetti ── */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: confetti-fall linear forwards;
+}
+.confetti-piece:nth-child(odd) {
+  border-radius: 50%;
+}
+.confetti-piece:nth-child(even) {
+  border-radius: 2px;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  80% { opacity: 1; }
+  100% {
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ── Line Wave Background (light bg version) ── */
+.line-waves-bg-light svg path {
+  stroke: var(--primary-medium, #3b82f6);
+}
+.line-waves-bg-light svg {
+  opacity: 0.08;
+}
