@@ -24,7 +24,7 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
