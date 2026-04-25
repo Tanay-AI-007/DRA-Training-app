@@ -127,5 +127,16 @@
         <span class="active">EN</span> | <span>हिंदी</span> | <span>मराठी</span>
     </div>
 
+    <script>
+        window.addEventListener('offline', () => {
+            document.body.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <h2>No Internet Connection</h2>
+                    <p>Please check your network and try again.</p>
+                </div>
+            `
+        })
+    </script>
+
 </body>
 </html>
