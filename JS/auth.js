@@ -70,18 +70,10 @@ export async function registerStudentBasic(fullName, email, password, language) 
   return { success: true }
 }
 
-export async function loginStudent(email, password, accessCode) {
-  const latestCode = await getLatestAccessCode()
-  if (!latestCode) return { error: 'No access code found. Contact your institute.' }
-  if (latestCode !== accessCode) return { error: 'Wrong access code. Get the new one from your institute.' }
-
+export async function loginStudent(email, password) {
   const userCredential = await signInWithEmailAndPassword(auth, email, password)
     .catch(err => ({ error: friendlyAuthError(err) }))
   if (userCredential.error) return userCredential
-
-  await updateDoc(doc(db, 'students', userCredential.user.uid), {
-    last_verified_code: accessCode
-  })
 
   return { success: true }
 }

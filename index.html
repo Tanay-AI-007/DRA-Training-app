@@ -709,13 +709,13 @@
                         </button>
                     </label>
 
-                    <label class="field-shell login-only" id="access-field" for="access-code">
+                    <label class="field-shell register-only" id="access-field" for="access-code">
                         <span class="field-icon" aria-hidden="true"><i class="fa-solid fa-key"></i></span>
                         <input type="text" id="access-code" name="access-code" placeholder="Monthly Access Code" autocomplete="off">
                         <span class="field-action" aria-hidden="true"><i class="fa-solid fa-lock"></i></span>
                     </label>
 
-                    <p class="access-note student-copy login-copy">Contact your institute for access code</p>
+                    <p class="access-note student-copy register-copy">Contact your institute for access code</p>
                     <button class="admin-back admin-only" id="back-to-student" type="button">
                         <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
                         Back to Student Portal
@@ -761,13 +761,14 @@
             .catch(() => {});
 
         function resetSubmitState() {
+            errorDiv.style.color = 'var(--danger, #e53e3e)';
             errorDiv.textContent = '';
             loginButton.disabled = false;
             loginButtonLabel.textContent = loginMode === 'student' && studentMode === 'register' ? 'REGISTER' : 'LOGIN';
         }
 
         function updateRequiredFields() {
-            accessCodeInput.required = loginMode === 'student' && studentMode === 'login';
+            accessCodeInput.required = loginMode === 'student' && studentMode === 'register';
             fullNameInput.required = loginMode === 'student' && studentMode === 'register';
         }
 
@@ -831,9 +832,10 @@
             const accessCode = accessCodeInput.value.trim();
             const language = 'en';
 
+            errorDiv.style.color = 'var(--danger, #e53e3e)';
             errorDiv.textContent = '';
 
-            if (!email || !password || (loginMode === 'student' && studentMode === 'login' && !accessCode) || (loginMode === 'student' && studentMode === 'register' && !fullName)) {
+            if (!email || !password || (loginMode === 'student' && studentMode === 'register' && (!accessCode || !fullName))) {
                 errorDiv.textContent = 'Please fill all fields.';
                 return;
             }
@@ -852,16 +854,16 @@
             }
 
             if (studentMode === 'register') {
-                let registerStudentBasic;
+                let registerStudent;
                 try {
-                    ({ registerStudentBasic } = await import('./JS/auth.js'));
+                    ({ registerStudent } = await import('./JS/auth.js'));
                 } catch (error) {
                     errorDiv.textContent = 'Unable to load registration services. Please run the app through a local server.';
                     resetSubmitState();
                     return;
                 }
 
-                const result = await registerStudentBasic(fullName, email, password, language);
+                const result = await registerStudent(fullName, email, password, language, accessCode);
 
                 if (result.error) {
                     errorDiv.textContent = result.error;
@@ -869,7 +871,12 @@
                     return;
                 }
 
-                window.location.href = 'Student/dashboard.html';
+                errorDiv.style.color = '#10b981';
+                errorDiv.textContent = 'Registered successfully! Redirecting...';
+                
+                setTimeout(() => {
+                    window.location.href = 'Student/dashboard.html';
+                }, 1500);
                 return;
             }
 
@@ -882,7 +889,7 @@
                 return;
             }
 
-            const result = await loginStudent(email, password, accessCode);
+            const result = await loginStudent(email, password);
 
             if (result.error) {
                 errorDiv.textContent = result.error;
