@@ -18,55 +18,74 @@
 
         body.login-body {
             min-height: 100vh;
+            min-height: 100svh;
             margin: 0;
             overflow-x: hidden;
             overflow-y: auto;
             background: #ffffff;
             color: var(--login-navy);
+            font-family: "Segoe UI", Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .login-page {
             position: relative;
+            display: grid;
+            grid-template-columns: minmax(440px, 560px) minmax(0, 1fr);
             min-height: 100vh;
+            min-height: 100svh;
             isolation: isolate;
+            background: #ffffff;
         }
 
         .login-art {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background-image: url("Assets/login-reference.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            position: relative;
+            z-index: 0;
+            grid-column: 2;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 48px 28px 28px;
+            overflow: hidden;
+            background: #ffffff;
             pointer-events: none;
+        }
+
+        .login-art-image {
+            width: min(100%, 1320px);
+            max-height: 92vh;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 24px 36px rgba(34, 78, 132, 0.08));
         }
 
         .login-panel {
             position: relative;
-            z-index: 1;
+            z-index: 3;
+            grid-column: 1;
+            grid-row: 1;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            width: 520px;
-            min-width: 520px;
-            padding: 54px 0 46px 68px;
+            min-height: 100svh;
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            padding: clamp(34px, 5vh, 54px) clamp(28px, 4vw, 68px) clamp(30px, 5vh, 46px);
             background: #ffffff;
+            box-shadow: 18px 0 48px rgba(15, 45, 94, 0.06);
         }
 
         .brand-logo {
             display: block;
-            width: 328px;
-            height: 112px;
-            background-image: url("Assets/nexus-dra-logo.png");
-            background-position: left top;
-            background-repeat: no-repeat;
-            background-size: contain;
+            width: min(340px, 100%);
+            height: auto;
+            object-fit: contain;
         }
 
         .login-content {
-            width: 440px;
-            margin-top: 52px;
+            width: min(440px, 100%);
+            margin-top: clamp(30px, 5vh, 52px);
         }
 
         .login-heading {
@@ -92,7 +111,7 @@
         .role-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            width: 428px;
+            width: 100%;
             margin-top: 36px;
             border-bottom: 2px solid #e3e6ed;
         }
@@ -153,7 +172,7 @@
             align-items: center;
             justify-content: center;
             gap: 28px;
-            width: 428px;
+            width: 100%;
             height: 44px;
             color: #7c8292;
             font-size: 16px;
@@ -216,7 +235,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            width: 440px;
+            width: 100%;
             margin-top: 22px;
         }
 
@@ -233,8 +252,9 @@
         .field-shell {
             display: flex;
             align-items: center;
-            width: 440px;
+            width: 100%;
             height: 62px;
+            box-sizing: border-box;
             border: 1.5px solid var(--login-border);
             border-radius: 8px;
             background: #ffffff;
@@ -267,6 +287,14 @@
             letter-spacing: 0;
         }
 
+        .field-shell input:-webkit-autofill,
+        .field-shell input:-webkit-autofill:hover,
+        .field-shell input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #17223a;
+            box-shadow: 0 0 0 1000px #ffffff inset;
+            transition: background-color 9999s ease-in-out 0s;
+        }
+
         .field-shell input::placeholder {
             color: #747d91;
             opacity: 1;
@@ -279,6 +307,7 @@
             color: #545b6c;
             font-size: 20px;
             cursor: pointer;
+            touch-action: manipulation;
         }
 
         .field-shell select {
@@ -349,7 +378,7 @@
             align-items: center;
             justify-content: center;
             gap: 16px;
-            width: 440px;
+            width: 100%;
             height: 70px;
             margin-top: 0;
             border: 0;
@@ -361,6 +390,7 @@
             font-weight: 800;
             letter-spacing: 0;
             cursor: pointer;
+            touch-action: manipulation;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
@@ -390,24 +420,33 @@
 
         .instructions-link {
             position: fixed;
-            top: 7.3vh;
-            right: 2.6vw;
-            z-index: 2;
+            top: max(18px, env(safe-area-inset-top));
+            right: max(18px, env(safe-area-inset-right));
+            z-index: 30;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            width: 245px;
-            min-height: 34px;
+            justify-content: center;
+            gap: 9px;
+            min-height: 40px;
+            padding: 0 14px 0 16px;
             color: var(--login-blue);
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(6, 84, 217, 0.18);
             font-size: 17px;
-            font-weight: 500;
+            font-weight: 700;
             text-decoration: none;
             border-radius: 999px;
+            box-shadow: 0 10px 28px rgba(16, 45, 95, 0.12);
+            pointer-events: auto;
+            touch-action: manipulation;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
-        .instructions-link span,
-        .instructions-link i {
-            visibility: hidden;
+        .instructions-link:hover,
+        .instructions-link:focus-visible {
+            border-color: rgba(6, 84, 217, 0.4);
+            box-shadow: 0 14px 32px rgba(16, 45, 95, 0.16);
+            transform: translateY(-1px);
         }
 
         .instructions-link i {
@@ -433,31 +472,47 @@
             border: 0;
         }
 
-        @media (max-width: 960px) {
-            body.login-body {
-                overflow: auto;
-                background: #ffffff;
-            }
-
-            .login-art,
-            .instructions-link {
-                display: none;
-            }
-
+        @media (max-width: 1180px) {
             .login-page {
-                min-height: 100vh;
+                grid-template-columns: minmax(390px, 500px) minmax(0, 1fr);
             }
 
             .login-panel {
+                padding-left: 34px;
+                padding-right: 34px;
+            }
+
+            .login-heading {
+                font-size: 42px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            body.login-body {
+                overflow: auto;
+                background: #f7fbff;
+            }
+
+            .login-page {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                min-height: 100svh;
+                background: #f7fbff;
+            }
+
+            .login-panel {
+                order: 1;
                 width: 100%;
                 min-width: 0;
-                padding: 36px 22px 28px;
+                min-height: auto;
+                padding: 66px 22px 30px;
                 align-items: center;
+                box-shadow: none;
             }
 
             .brand-logo {
-                width: min(328px, 88vw);
-                height: 112px;
+                width: min(292px, 82vw);
             }
 
             .login-content,
@@ -469,6 +524,21 @@
 
             .login-content {
                 margin-top: 28px;
+            }
+
+            .login-art {
+                order: 2;
+                display: block;
+                min-height: auto;
+                padding: 0 16px 28px;
+                background: #f7fbff;
+            }
+
+            .login-art-image {
+                display: block;
+                width: min(100%, 620px);
+                max-height: 310px;
+                margin: 0 auto;
             }
 
             .student-actions {
@@ -492,15 +562,64 @@
                 width: min(440px, 100%);
                 margin-top: 58px;
             }
+
+            .instructions-link {
+                top: max(12px, env(safe-area-inset-top));
+                right: max(12px, env(safe-area-inset-right));
+                min-height: 38px;
+                padding: 0 12px 0 14px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .login-panel {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .login-heading {
+                font-size: clamp(34px, 10vw, 42px);
+            }
+
+            .field-shell {
+                height: 58px;
+            }
+
+            .field-shell + .field-shell {
+                margin-top: 18px;
+            }
+
+            .field-icon {
+                flex-basis: 54px;
+            }
+
+            .access-note {
+                margin: 20px 0 22px;
+            }
+
+            .login-submit {
+                height: 64px;
+                font-size: 18px;
+            }
+
+            .instructions-link span {
+                max-width: 142px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
 <body class="login-body" data-login-mode="student" data-student-mode="login">
     <main class="login-page">
-        <div class="login-art" aria-hidden="true"></div>
+        <div class="login-art" aria-hidden="true">
+            <img class="login-art-image" src="Assets/login-page-image.png" alt="">
+        </div>
 
         <section class="login-panel" aria-label="Student login">
-            <div class="brand-logo" role="img" aria-label="Nexus DRA Training Center"></div>
+            <img class="brand-logo" src="Assets/nexus-dra-logo-highres.png" alt="Nexus DRA Training Center Pune">
 
             <div class="login-content">
                 <h1 class="login-heading student-copy">Welcome <span>Back!</span></h1>
