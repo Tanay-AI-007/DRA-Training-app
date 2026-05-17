@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/Admin/login.html",
+      "destination": "/index.html#admin",
+      "permanent": true
+    },
+    {
+      "source": "/register.html",
+      "destination": "/index.html#register",
+      "permanent": true
+    },
+    {
+      "source": "/Admin/login",
+      "destination": "/index.html#admin",
+      "permanent": true
+    },
+    {
+      "source": "/register",
+      "destination": "/index.html#register",
+      "permanent": true
+    }
+  ]
+}
