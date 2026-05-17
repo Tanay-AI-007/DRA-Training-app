@@ -13,92 +13,110 @@
             --instruction-cyan: #0797bc;
             --instruction-muted: #5d6680;
             --instruction-border: #e1e6ee;
+            --instruction-soft: #f7fbff;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             min-height: 100vh;
+            min-height: 100svh;
             margin: 0;
             overflow-x: hidden;
             background: #ffffff;
             color: var(--instruction-navy);
+            font-family: "Segoe UI", Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .instructions-page {
             position: relative;
+            display: grid;
+            grid-template-columns: minmax(540px, 720px) minmax(0, 1fr);
             min-height: 100vh;
+            min-height: 100svh;
             isolation: isolate;
-        }
-
-        .instructions-art {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background-image: url("Assets/instructions-reference.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            pointer-events: none;
-        }
-
-        .instructions-panel {
-            width: 690px;
-            min-height: 100vh;
-            padding: 14px 0 28px 38px;
             background: #ffffff;
         }
 
+        .instructions-art {
+            position: sticky;
+            top: 0;
+            z-index: 0;
+            grid-column: 2;
+            grid-row: 1;
+            display: grid;
+            place-items: center;
+            height: 100vh;
+            height: 100svh;
+            padding: 58px 28px 28px;
+            overflow: hidden;
+            background: #ffffff;
+            pointer-events: none;
+        }
+
+        .instructions-art-image {
+            width: min(100%, 1260px);
+            max-height: 90vh;
+            object-fit: contain;
+            object-position: center bottom;
+            filter: drop-shadow(0 24px 36px rgba(34, 78, 132, 0.08));
+        }
+
+        .instructions-panel {
+            position: relative;
+            z-index: 2;
+            grid-column: 1;
+            grid-row: 1;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 18px clamp(26px, 3.2vw, 46px) 36px;
+            background: #ffffff;
+            box-shadow: 18px 0 48px rgba(15, 45, 94, 0.06);
+        }
+
         .brand-logo {
-            width: 257px;
-            height: 72px;
-            background-image: url("Assets/nexus-dra-logo.png");
-            background-position: left top;
-            background-repeat: no-repeat;
-            background-size: contain;
+            display: block;
+            width: min(270px, 100%);
+            height: auto;
+            object-fit: contain;
         }
 
         .instructions-title {
-            margin: 17px 0 5px 20px;
+            margin: 22px 0 6px;
             color: var(--instruction-navy);
-            font-size: 30px;
+            font-size: clamp(28px, 3vw, 36px);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.12;
+            letter-spacing: 0;
         }
 
         .instructions-subtitle {
-            margin: 0 0 12px 20px;
+            margin: 0 0 16px;
             color: var(--instruction-muted);
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
-        }
-
-        .read-time {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            margin: 0 0 12px 20px;
-            padding: 7px 12px;
-            border-radius: 8px;
-            background: #eaf7ff;
-            color: var(--instruction-blue);
-            font-size: 14px;
-            font-weight: 800;
+            line-height: 1.45;
         }
 
         .instruction-list {
             display: flex;
             flex-direction: column;
-            width: 620px;
-            margin-left: 14px;
+            width: 100%;
+            gap: 0;
         }
 
         .instruction-card {
             display: grid;
-            grid-template-columns: 92px 1fr;
-            gap: 24px;
-            padding: 12px 20px 11px 22px;
+            grid-template-columns: 84px minmax(0, 1fr);
+            gap: 20px;
+            width: 100%;
+            padding: 16px 20px 15px;
             border: 1px solid var(--instruction-border);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             box-shadow: 0 2px 6px rgba(12, 31, 67, 0.04);
         }
 
@@ -110,9 +128,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 62px;
-            height: 62px;
-            margin-top: 2px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: #e5f8f8;
             color: #068da8;
@@ -130,19 +147,20 @@
         }
 
         .instruction-card h2 {
-            margin: 0 0 6px;
+            margin: 0 0 7px;
             color: var(--instruction-navy);
-            font-size: 17px;
+            font-size: 19px;
             font-weight: 800;
             line-height: 1.25;
+            letter-spacing: 0;
         }
 
         .instruction-card p,
         .instruction-card li {
             color: var(--instruction-muted);
-            font-size: 13.25px;
+            font-size: 14.5px;
             font-weight: 500;
-            line-height: 1.36;
+            line-height: 1.42;
         }
 
         .instruction-card p {
@@ -159,19 +177,19 @@
 
         .numbered-steps li {
             position: relative;
-            padding-left: 24px;
+            padding-left: 26px;
             margin-bottom: 5px;
         }
 
         .step-number {
             position: absolute;
             left: 0;
-            top: 1px;
+            top: 2px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             border-radius: 50%;
             background: #078aa5;
             color: #ffffff;
@@ -183,20 +201,21 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            margin-top: 12px;
+            margin-top: 13px;
             padding: 10px 14px;
             border-radius: 6px;
             background: #edf7ff;
             color: #0a4d98;
             font-size: 13px;
             font-weight: 800;
+            line-height: 1.35;
         }
 
         .feature-list li,
         .trouble-list li {
             position: relative;
-            padding-left: 16px;
-            margin-bottom: 3px;
+            padding-left: 17px;
+            margin-bottom: 4px;
         }
 
         .feature-list li::before,
@@ -217,84 +236,164 @@
 
         .back-login {
             position: fixed;
-            top: 43px;
-            right: 38px;
-            z-index: 2;
+            top: max(18px, env(safe-area-inset-top));
+            right: max(18px, env(safe-area-inset-right));
+            z-index: 30;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            width: 150px;
-            height: 34px;
+            justify-content: center;
+            gap: 9px;
+            min-height: 40px;
+            padding: 0 16px 0 14px;
             color: var(--instruction-blue);
-            font-size: 15px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(6, 84, 217, 0.18);
+            border-radius: 999px;
+            box-shadow: 0 10px 28px rgba(16, 45, 95, 0.12);
+            font-size: 16px;
             font-weight: 800;
             text-decoration: none;
+            touch-action: manipulation;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
-        .back-login i,
-        .back-login span {
-            visibility: hidden;
+        .back-login:hover,
+        .back-login:focus-visible {
+            border-color: rgba(6, 84, 217, 0.4);
+            box-shadow: 0 14px 32px rgba(16, 45, 95, 0.16);
+            transform: translateY(-1px);
         }
 
-        @media (max-width: 960px) {
-            .instructions-art {
-                display: none;
+        .back-login i {
+            font-size: 15px;
+        }
+
+        @media (max-width: 1180px) {
+            .instructions-page {
+                grid-template-columns: minmax(500px, 650px) minmax(0, 1fr);
             }
 
             .instructions-panel {
-                width: 100%;
-                padding: 18px 18px 28px;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            body {
+                background: var(--instruction-soft);
             }
 
-            .instructions-title,
-            .instructions-subtitle,
-            .read-time,
-            .instruction-list {
-                margin-left: 0;
+            .instructions-page {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                min-height: 100svh;
+                background: var(--instruction-soft);
             }
 
-            .instruction-list {
+            .instructions-panel {
+                order: 1;
                 width: 100%;
+                min-height: auto;
+                padding: 66px 18px 28px;
+                box-shadow: none;
+            }
+
+            .brand-logo {
+                width: min(292px, 82vw);
+            }
+
+            .instructions-title {
+                font-size: clamp(28px, 8vw, 36px);
             }
 
             .instruction-card {
-                grid-template-columns: 62px 1fr;
-                gap: 16px;
-                padding: 16px;
+                grid-template-columns: 62px minmax(0, 1fr);
+                gap: 14px;
+                padding: 15px;
+            }
+
+            .icon-bubble {
+                width: 54px;
+                height: 54px;
+                font-size: 23px;
+            }
+
+            .instructions-art {
+                position: relative;
+                order: 2;
+                display: block;
+                height: auto;
+                padding: 0 16px 28px;
+                background: var(--instruction-soft);
+            }
+
+            .instructions-art-image {
+                display: block;
+                width: min(100%, 620px);
+                max-height: 310px;
+                margin: 0 auto;
             }
 
             .back-login {
-                position: static;
-                margin: 18px;
-                width: auto;
-                height: auto;
+                top: max(12px, env(safe-area-inset-top));
+                right: max(12px, env(safe-area-inset-right));
+                min-height: 38px;
+                padding: 0 12px 0 13px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .instructions-panel {
+                padding-left: 16px;
+                padding-right: 16px;
             }
 
-            .back-login i,
+            .instructions-subtitle {
+                font-size: 15px;
+            }
+
+            .instruction-card {
+                grid-template-columns: 1fr;
+                gap: 11px;
+            }
+
+            .instruction-card h2 {
+                font-size: 18px;
+            }
+
+            .instruction-card p,
+            .instruction-card li {
+                font-size: 14px;
+            }
+
             .back-login span {
-                visibility: visible;
+                max-width: 112px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     </style>
 </head>
 <body>
     <main class="instructions-page">
-        <div class="instructions-art" aria-hidden="true"></div>
+        <div class="instructions-art" aria-hidden="true">
+            <img class="instructions-art-image" src="Assets/login-page-image.png" alt="">
+        </div>
 
-        <a class="back-login" href="login.html">
+        <a class="back-login" href="index.html" aria-label="Back to Login">
             <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
             <span>Back to Login</span>
         </a>
 
         <section class="instructions-panel" aria-label="DRA Training Platform Instructions">
-            <div class="brand-logo" role="img" aria-label="Nexus DRA Training Center"></div>
+            <img class="brand-logo" src="Assets/nexus-dra-logo-highres.png" alt="Nexus DRA Training Center Pune">
 
             <h1 class="instructions-title">DRA Training Platform - Instructions</h1>
             <p class="instructions-subtitle">Follow these steps to access and complete your training smoothly.</p>
-            <div class="read-time">
-                <i class="fa-regular fa-clock" aria-hidden="true"></i>
-                Estimated read time: 1-2 minutes
-            </div>
 
             <div class="instruction-list">
                 <article class="instruction-card">
@@ -312,7 +411,7 @@
                         <ol class="numbered-steps">
                             <li><span class="step-number">1</span>Enter your registered email ID.</li>
                             <li><span class="step-number">2</span>Enter your password.</li>
-                            <li><span class="step-number">3</span>Enter your Monthly Access Code (provided by your institute).</li>
+                            <li><span class="step-number">3</span>Enter your Monthly Access Code provided by your institute.</li>
                             <li><span class="step-number">4</span><strong>Click LOGIN.</strong></li>
                         </ol>
                         <div class="info-note">
@@ -326,7 +425,7 @@
                     <div class="icon-bubble"><i class="fa-solid fa-key" aria-hidden="true"></i></div>
                     <div>
                         <h2>3. What is Monthly Access Code?</h2>
-                        <p>The Monthly Access Code is issued by your institute. It is valid for a limited time (monthly) and is required to unlock the training content. Contact your institute if the access code is not working.</p>
+                        <p>The Monthly Access Code is issued by your institute. It is valid for a limited time and is required to unlock the training content. Contact your institute if the access code is not working.</p>
                     </div>
                 </article>
 
@@ -335,8 +434,8 @@
                     <div>
                         <h2>4. Features of the Platform</h2>
                         <ul class="feature-list">
-                            <li>Trilingual learning - English / Hindi / Marathi</li>
-                            <li>Banking-focused content (Recovery Laws, Case Studies & more)</li>
+                            <li>Trilingual learning: English / Hindi / Marathi</li>
+                            <li>Banking-focused content including Recovery Laws and Case Studies</li>
                             <li>Progress tracking and performance reports</li>
                             <li>IIBF-aligned preparation for professional excellence</li>
                         </ul>
@@ -348,8 +447,8 @@
                     <div>
                         <h2>5. Troubleshooting</h2>
                         <ul class="trouble-list">
-                            <li>Forgot Password? Use the Forgot Password option.</li>
-                            <li>Invalid Access Code? Contact your institute.</li>
+                            <li>Forgot password? Use the Forgot Password option.</li>
+                            <li>Invalid access code? Contact your institute.</li>
                             <li>Login issues? Check your internet connection and credentials.</li>
                         </ul>
                     </div>

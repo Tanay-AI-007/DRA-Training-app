@@ -16,12 +16,16 @@
             --login-border: #d5dae5;
         }
 
+        html {
+            scrollbar-gutter: stable;
+        }
+
         body.login-body {
             min-height: 100vh;
             min-height: 100svh;
             margin: 0;
             overflow-x: hidden;
-            overflow-y: auto;
+            overflow-y: hidden;
             background: #ffffff;
             color: var(--login-navy);
             font-family: "Segoe UI", Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -33,6 +37,9 @@
             grid-template-columns: minmax(440px, 560px) minmax(0, 1fr);
             min-height: 100vh;
             min-height: 100svh;
+            height: 100vh;
+            height: 100svh;
+            overflow: hidden;
             isolation: isolate;
             background: #ffffff;
         }
@@ -45,6 +52,8 @@
             place-items: center;
             min-height: 100vh;
             min-height: 100svh;
+            height: 100vh;
+            height: 100svh;
             padding: 48px 28px 28px;
             overflow: hidden;
             background: #ffffff;
@@ -68,12 +77,22 @@
             flex-direction: column;
             min-height: 100vh;
             min-height: 100svh;
+            height: 100vh;
+            height: 100svh;
             width: 100%;
             min-width: 0;
             box-sizing: border-box;
             padding: clamp(34px, 5vh, 54px) clamp(28px, 4vw, 68px) clamp(30px, 5vh, 46px);
+            overflow-x: hidden;
+            overflow-y: auto;
             background: #ffffff;
             box-shadow: 18px 0 48px rgba(15, 45, 94, 0.06);
+            scrollbar-width: none;
+        }
+
+        .login-panel::-webkit-scrollbar {
+            width: 0;
+            height: 0;
         }
 
         .brand-logo {
@@ -86,6 +105,10 @@
         .login-content {
             width: min(440px, 100%);
             margin-top: clamp(30px, 5vh, 52px);
+        }
+
+        body[data-login-mode="student"][data-student-mode="register"] .login-content {
+            margin-top: clamp(18px, 3vh, 34px);
         }
 
         .login-heading {
@@ -241,6 +264,10 @@
 
         .field-shell + .field-shell {
             margin-top: 24px;
+        }
+
+        body[data-login-mode="student"][data-student-mode="register"] .field-shell + .field-shell {
+            margin-top: 16px;
         }
 
         body[data-login-mode="admin"] label[for="email"],
@@ -498,6 +525,8 @@
                 flex-direction: column;
                 min-height: 100vh;
                 min-height: 100svh;
+                height: auto;
+                overflow: visible;
                 background: #f7fbff;
             }
 
@@ -506,9 +535,12 @@
                 width: 100%;
                 min-width: 0;
                 min-height: auto;
+                height: auto;
                 padding: 66px 22px 30px;
                 align-items: center;
                 box-shadow: none;
+                overflow: visible;
+                scrollbar-width: auto;
             }
 
             .brand-logo {
@@ -530,6 +562,7 @@
                 order: 2;
                 display: block;
                 min-height: auto;
+                height: auto;
                 padding: 0 16px 28px;
                 background: #f7fbff;
             }
