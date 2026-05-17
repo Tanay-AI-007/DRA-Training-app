@@ -10,6 +10,17 @@ import {
   query, orderBy, limit, getDocs
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+function friendlyAuthError(error) {
+  const code = error?.code || ''
+  if (code === 'auth/email-already-in-use') return 'Already registered.'
+  if (code === 'auth/invalid-email') return 'Please enter a valid email address.'
+  if (code === 'auth/weak-password') return 'Password must be at least 6 characters.'
+  if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
+    return 'Invalid email or password.'
+  }
+  return error?.message || 'Something went wrong. Please try again.'
+}
+
 async function getLatestAccessCode() {
   const q = query(
     collection(db, 'access_codes'),
@@ -27,7 +38,7 @@ export async function registerStudent(fullName, email, password, language, acces
   if (latestCode !== accessCode) return { error: 'Invalid access code. Contact your institute.' }
 
   const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    .catch(err => ({ error: err.message }))
+    .catch(err => ({ error: friendlyAuthError(err) }))
   if (userCredential.error) return userCredential
 
   await setDoc(doc(db, 'students', userCredential.user.uid), {
@@ -42,13 +53,30 @@ export async function registerStudent(fullName, email, password, language, acces
   return { success: true }
 }
 
+export async function registerStudentBasic(fullName, email, password, language) {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    .catch(err => ({ error: friendlyAuthError(err) }))
+  if (userCredential.error) return userCredential
+
+  await setDoc(doc(db, 'students', userCredential.user.uid), {
+    full_name: fullName,
+    email: email,
+    language: language,
+    last_verified_code: null,
+    is_active: true,
+    created_at: new Date()
+  })
+
+  return { success: true }
+}
+
 export async function loginStudent(email, password, accessCode) {
   const latestCode = await getLatestAccessCode()
   if (!latestCode) return { error: 'No access code found. Contact your institute.' }
   if (latestCode !== accessCode) return { error: 'Wrong access code. Get the new one from your institute.' }
 
   const userCredential = await signInWithEmailAndPassword(auth, email, password)
-    .catch(err => ({ error: err.message }))
+    .catch(err => ({ error: friendlyAuthError(err) }))
   if (userCredential.error) return userCredential
 
   await updateDoc(doc(db, 'students', userCredential.user.uid), {

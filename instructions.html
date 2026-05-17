@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructions | Nexus DRA Training Center</title>
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --instruction-navy: #102d5f;
+            --instruction-blue: #0654d9;
+            --instruction-cyan: #0797bc;
+            --instruction-muted: #5d6680;
+            --instruction-border: #e1e6ee;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            background: #ffffff;
+            color: var(--instruction-navy);
+        }
+
+        .instructions-page {
+            position: relative;
+            min-height: 100vh;
+            isolation: isolate;
+        }
+
+        .instructions-art {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image: url("Assets/instructions-reference.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            pointer-events: none;
+        }
+
+        .instructions-panel {
+            width: 690px;
+            min-height: 100vh;
+            padding: 14px 0 28px 38px;
+            background: #ffffff;
+        }
+
+        .brand-logo {
+            width: 257px;
+            height: 72px;
+            background-image: url("Assets/nexus-dra-logo.png");
+            background-position: left top;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .instructions-title {
+            margin: 17px 0 5px 20px;
+            color: var(--instruction-navy);
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .instructions-subtitle {
+            margin: 0 0 12px 20px;
+            color: var(--instruction-muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .read-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 12px 20px;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background: #eaf7ff;
+            color: var(--instruction-blue);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .instruction-list {
+            display: flex;
+            flex-direction: column;
+            width: 620px;
+            margin-left: 14px;
+        }
+
+        .instruction-card {
+            display: grid;
+            grid-template-columns: 92px 1fr;
+            gap: 24px;
+            padding: 12px 20px 11px 22px;
+            border: 1px solid var(--instruction-border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 6px rgba(12, 31, 67, 0.04);
+        }
+
+        .instruction-card + .instruction-card {
+            margin-top: 0;
+        }
+
+        .icon-bubble {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 62px;
+            height: 62px;
+            margin-top: 2px;
+            border-radius: 50%;
+            background: #e5f8f8;
+            color: #068da8;
+            font-size: 27px;
+        }
+
+        .icon-bubble.warning {
+            background: #fff0df;
+            color: #ff7a00;
+        }
+
+        .icon-bubble.support {
+            background: #edf6ff;
+            color: var(--instruction-blue);
+        }
+
+        .instruction-card h2 {
+            margin: 0 0 6px;
+            color: var(--instruction-navy);
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .instruction-card p,
+        .instruction-card li {
+            color: var(--instruction-muted);
+            font-size: 13.25px;
+            font-weight: 500;
+            line-height: 1.36;
+        }
+
+        .instruction-card p {
+            margin: 0;
+        }
+
+        .numbered-steps,
+        .feature-list,
+        .trouble-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .numbered-steps li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 5px;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #078aa5;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .info-note {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            background: #edf7ff;
+            color: #0a4d98;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .feature-list li,
+        .trouble-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 3px;
+        }
+
+        .feature-list li::before,
+        .trouble-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--instruction-cyan);
+        }
+
+        .trouble-list li::before {
+            background: #ff7a00;
+        }
+
+        .back-login {
+            position: fixed;
+            top: 43px;
+            right: 38px;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: 150px;
+            height: 34px;
+            color: var(--instruction-blue);
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .back-login i,
+        .back-login span {
+            visibility: hidden;
+        }
+
+        @media (max-width: 960px) {
+            .instructions-art {
+                display: none;
+            }
+
+            .instructions-panel {
+                width: 100%;
+                padding: 18px 18px 28px;
+            }
+
+            .instructions-title,
+            .instructions-subtitle,
+            .read-time,
+            .instruction-list {
+                margin-left: 0;
+            }
+
+            .instruction-list {
+                width: 100%;
+            }
+
+            .instruction-card {
+                grid-template-columns: 62px 1fr;
+                gap: 16px;
+                padding: 16px;
+            }
+
+            .back-login {
+                position: static;
+                margin: 18px;
+                width: auto;
+                height: auto;
+            }
+
+            .back-login i,
+            .back-login span {
+                visibility: visible;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="instructions-page">
+        <div class="instructions-art" aria-hidden="true"></div>
+
+        <a class="back-login" href="login.html">
+            <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
+            <span>Back to Login</span>
+        </a>
+
+        <section class="instructions-panel" aria-label="DRA Training Platform Instructions">
+            <div class="brand-logo" role="img" aria-label="Nexus DRA Training Center"></div>
+
+            <h1 class="instructions-title">DRA Training Platform - Instructions</h1>
+            <p class="instructions-subtitle">Follow these steps to access and complete your training smoothly.</p>
+            <div class="read-time">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                Estimated read time: 1-2 minutes
+            </div>
+
+            <div class="instruction-list">
+                <article class="instruction-card">
+                    <div class="icon-bubble"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>1. Who is this for?</h2>
+                        <p>This platform is designed for DRA trainees (students) and Admin / Institutes.</p>
+                    </div>
+                </article>
+
+                <article class="instruction-card">
+                    <div class="icon-bubble"><i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>2. How to Login</h2>
+                        <ol class="numbered-steps">
+                            <li><span class="step-number">1</span>Enter your registered email ID.</li>
+                            <li><span class="step-number">2</span>Enter your password.</li>
+                            <li><span class="step-number">3</span>Enter your Monthly Access Code (provided by your institute).</li>
+                            <li><span class="step-number">4</span><strong>Click LOGIN.</strong></li>
+                        </ol>
+                        <div class="info-note">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            Access code is mandatory for course access.
+                        </div>
+                    </div>
+                </article>
+
+                <article class="instruction-card">
+                    <div class="icon-bubble"><i class="fa-solid fa-key" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>3. What is Monthly Access Code?</h2>
+                        <p>The Monthly Access Code is issued by your institute. It is valid for a limited time (monthly) and is required to unlock the training content. Contact your institute if the access code is not working.</p>
+                    </div>
+                </article>
+
+                <article class="instruction-card">
+                    <div class="icon-bubble"><i class="fa-solid fa-desktop" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>4. Features of the Platform</h2>
+                        <ul class="feature-list">
+                            <li>Trilingual learning - English / Hindi / Marathi</li>
+                            <li>Banking-focused content (Recovery Laws, Case Studies & more)</li>
+                            <li>Progress tracking and performance reports</li>
+                            <li>IIBF-aligned preparation for professional excellence</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="instruction-card">
+                    <div class="icon-bubble warning"><i class="fa-regular fa-circle-question" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>5. Troubleshooting</h2>
+                        <ul class="trouble-list">
+                            <li>Forgot Password? Use the Forgot Password option.</li>
+                            <li>Invalid Access Code? Contact your institute.</li>
+                            <li>Login issues? Check your internet connection and credentials.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="instruction-card">
+                    <div class="icon-bubble support"><i class="fa-solid fa-headset" aria-hidden="true"></i></div>
+                    <div>
+                        <h2>6. Contact / Support</h2>
+                        <p><strong>For any issues or assistance, please contact your training institute.</strong></p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
