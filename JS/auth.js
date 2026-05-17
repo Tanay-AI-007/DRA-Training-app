@@ -88,7 +88,7 @@ export async function loginStudent(email, password, accessCode) {
 
 export async function logout() {
   await signOut(auth)
-  window.location.href = '/index.html'
+  window.location.href = '/index.html?v=20260517'
 }
 
 export async function getSession() {
@@ -99,6 +99,6 @@ export async function getSession() {
 
 export async function requireAuth() {
   const user = await getSession()
-  if (!user) window.location.href = '/login.html'
+  if (!user) window.location.href = '/index.html?v=20260517'
   return user
 }

@@ -99,7 +99,7 @@
 
         const user = await getSession()
         if (!user) {
-            window.location.href = '/login.html'
+            window.location.href = '/index.html?v=20260517'
         } else {
             const snap = await getDoc(doc(db, 'students', user.uid))
             if (snap.exists()) {
