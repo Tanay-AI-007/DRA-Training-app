@@ -101,6 +101,14 @@
     <!-- TODO: Setup admin logic -->
     <script src="../JS/admin.js"></script>
     <script>
+        // Replace current history entry so back button can't go to landing page
+        history.replaceState(null, '', '/Admin/dashboard.html');
+
+        // Also add a popstate listener to catch back button
+        window.addEventListener('popstate', function() {
+            window.location.replace('/index.html#admin');
+        });
+
         window.addEventListener('offline', () => {
             document.body.innerHTML = `
                 <div style="text-align:center; padding:40px;">
