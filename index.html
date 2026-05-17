@@ -696,16 +696,6 @@
                         <span class="field-action" aria-hidden="true"><i class="fa-solid fa-lock"></i></span>
                     </label>
 
-                    <label class="field-shell register-only" for="language">
-                        <span class="field-icon" aria-hidden="true"><i class="fa-solid fa-language"></i></span>
-                        <select id="language" name="language">
-                            <option value="en">English</option>
-                            <option value="hi">Hindi</option>
-                            <option value="mr">Marathi</option>
-                        </select>
-                        <span class="field-action" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
-                    </label>
-
                     <p class="access-note student-copy login-copy">Contact your institute for access code</p>
                     <button class="admin-back admin-only" id="back-to-student" type="button">
                         <i class="fa-solid fa-arrow-left-long" aria-hidden="true"></i>
@@ -739,7 +729,6 @@
         const errorDiv = document.getElementById('error-msg');
         const accessCodeInput = document.getElementById('access-code');
         const fullNameInput = document.getElementById('fullname');
-        const languageInput = document.getElementById('language');
         const studentTab = document.getElementById('student-tab');
         const adminTab = document.getElementById('admin-tab');
         const studentLoginTab = document.getElementById('student-login-tab');
@@ -761,7 +750,6 @@
         function updateRequiredFields() {
             accessCodeInput.required = loginMode === 'student' && studentMode === 'login';
             fullNameInput.required = loginMode === 'student' && studentMode === 'register';
-            languageInput.required = loginMode === 'student' && studentMode === 'register';
         }
 
         function setStudentMode(mode, shouldUpdateHash = true) {
@@ -822,11 +810,11 @@
             const email = document.getElementById('email').value.trim();
             const password = passwordInput.value;
             const accessCode = accessCodeInput.value.trim();
-            const language = languageInput.value;
+            const language = 'en';
 
             errorDiv.textContent = '';
 
-            if (!email || !password || (loginMode === 'student' && studentMode === 'login' && !accessCode) || (loginMode === 'student' && studentMode === 'register' && (!fullName || !language))) {
+            if (!email || !password || (loginMode === 'student' && studentMode === 'login' && !accessCode) || (loginMode === 'student' && studentMode === 'register' && !fullName)) {
                 errorDiv.textContent = 'Please fill all fields.';
                 return;
             }
